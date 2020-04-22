@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lihaopeng.mapper.HerosMapper">
+	
+	<!-- 查询所有记录同意sql语句 -->
+	<sql id="query">
+		select * from 
+		hero as h 
+		join camp as c 
+		where h.cid = c.cid
+	</sql>
+	<!-- 查询所有记录、条件查询 -->
+	<select id="selectHerosAll" parameterType="map" resultType="com.lihaopeng.beans.Heros">
+		<include refid="query"></include>
+		<if test="cid != null and cid != '' ">
+			and c.cid = #{cid}
+		</if>
+		<if test="isHave != null and isHave != '' ">
+			and isHave = #{isHave}
+		</if>
+		<if test="min != null and min != '' ">
+			and price >= #{min}
+		</if>
+		<if test="max != null and max != '' ">
+			and price &lt;= #{max}
+		</if>
+	</select>
+	
+	
+</mapper>
